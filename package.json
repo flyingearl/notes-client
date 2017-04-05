@@ -1,6 +1,6 @@
 {
   "name": "notes-client",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A electron-vue project making use of Laravel 5.4 Notes API",
   "scripts": {
     "build": "npm run pack && build --win --mac -p always",
