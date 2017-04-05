@@ -12,7 +12,7 @@
     "postinstall": "cd app && npm install"
   },
   "build": {
-    "productName": "Notes",
+    "productName": "Vue Notes",
     "appId": "com.flyingearl.notes-client",
     "category": "public.app-category.tools",
     "dmg": {
