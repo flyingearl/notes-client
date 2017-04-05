@@ -1,12 +1,16 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 const {autoUpdater} = require('electron-updater')
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:${require('../../../config').port}`
   : `file://${__dirname}/index.html`
+
+function sendStatusToWindow(text) {
+    mainWindow.webContents.send('message', text);
+}
 
 function createWindow () {
   /**
@@ -22,17 +26,11 @@ function createWindow () {
     mainWindow = null
   })
 
+  autoUpdater.checkForUpdates()
+
   // eslint-disable-next-line no-console
   console.log('mainWindow opened')
 }
-
-app.on('ready', createWindow)
-
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
 
 autoUpdater.on('checking-for-update', () => {
     sendStatusToWindow('Checking for update...');
@@ -62,8 +60,12 @@ autoUpdater.on('update-downloaded', (ev, info) => {
     }, 5000)
 })
 
-app.on('ready', () => {
-  autoUpdater.checkForUpdates()
+app.on('ready', createWindow)
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
 })
 
 app.on('activate', () => {
