@@ -1,9 +1,9 @@
 {
   "name": "notes-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A electron-vue project making use of Laravel 5.4 Notes API",
   "scripts": {
-    "build": "npm run pack && build",
+    "build": "npm run pack && build --win --mac -p always",
     "build:dir": "npm run pack && build --dir",
     "dev": "node tasks/runner.js",
     "pack": "npm run pack:main && npm run pack:renderer",
@@ -12,8 +12,8 @@
     "postinstall": "cd app && npm install"
   },
   "build": {
-    "productName": "ElectronVue",
-    "appId": "org.simulatedgreg.electron-vue",
+    "productName": "Notes",
+    "appId": "com.flyingearl.notes-client",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
@@ -47,7 +47,7 @@
       ]
     }
   },
-  "author": "Greg Holguin <simulatedgreg@gmail.com>",
+  "author": "Edward Burton <flyingearl@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.8.0",

@@ -1,41 +1,22 @@
 <template>
   <div id="#app">
-    <landing-page></landing-page>
+    <router-view></router-view>
+
+    <div id="messages"></div>
   </div>
 </template>
 
 <script>
-  import LandingPage from 'components/LandingPageView'
+  const {ipcRenderer} = require('electron')
+
   export default {
-    components: {
-      LandingPage
-    }
+      mounted () {
+          ipcRenderer.on('message', function (event, text) {
+              var container = document.getElementById('messages')
+              var message = document.createElement('div')
+              message.innerHTML = text;
+              container.appendChild(message);
+          })
+      }
   }
 </script>
-
-<style>
-  @import url(https://fonts.googleapis.com/css?family=Lato:300);
-
-  * {
-    margin: 0;
-    padding: 0;
-  }
-
-  html,
-  body { height: 100%; }
-
-  body {
-    align-items: center;
-    background:
-      radial-gradient(
-        ellipse at center,
-        rgba(255, 255, 255, 1) 0%,
-        rgba(229, 229, 229, .85) 100%
-      );
-    background-position: center;
-    display: flex;
-    font-family: Lato, Helvetica, sans-serif;
-    justify-content: center;
-    text-align: center;
-  }
-</style>
