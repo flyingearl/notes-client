@@ -75,7 +75,7 @@
                 }).then(() => {
                     localforage.getItem('intended').then((name) => {
                         if (isEmpty(name)) {
-                            this.$router.replace({ name: 'home' })
+                            this.$router.replace({ name: 'notes' })
                             return
                         }
 
