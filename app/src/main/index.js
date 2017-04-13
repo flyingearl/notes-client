@@ -1,11 +1,9 @@
 'use strict'
 
 import { app, BrowserWindow, dialog } from 'electron'
-import { log } from 'electron-log'
+var log = require('electron-log')
 const {autoUpdater} = require('electron-updater')
 
-autoUpdater.logger = log
-autoUpdater.logger.transports.file.level = 'info'
 log.info('App starting...');
 
 let mainWindow
