@@ -1,7 +1,12 @@
 'use strict'
 
 import { app, BrowserWindow, dialog } from 'electron'
+import { log } from 'electron-log'
 const {autoUpdater} = require('electron-updater')
+
+autoUpdater.logger = log
+autoUpdater.logger.transports.file.level = 'info'
+log.info('App starting...');
 
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
@@ -9,6 +14,7 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 function sendStatusToWindow(text) {
+    log.info(text)
     mainWindow.webContents.send('message', text);
 }
 
@@ -35,9 +41,10 @@ function createWindow () {
 }
 
 autoUpdater.on('checking-for-update', () => {
-    // sendStatusToWindow('Checking for update...');
+    sendStatusToWindow('Checking for update...');
 })
 autoUpdater.on('update-available', (ev, info) => {
+    sendStatusToWindow('update available: ' + info);
     dialog.showMessageBox({
         type: 'info',
         title: 'Update Found',
@@ -45,16 +52,16 @@ autoUpdater.on('update-available', (ev, info) => {
     });
 })
 autoUpdater.on('update-not-available', (ev, info) => {
-    // sendStatusToWindow('Update not available.');
+    sendStatusToWindow('Update not available.');
 })
 autoUpdater.on('error', (ev, err) => {
-    sendStatusToWindow('Error in auto-updater.');
+    sendStatusToWindow('Error in auto-updater: ' + err);
 })
 autoUpdater.on('download-progress', (ev, progressObj) => {
     sendStatusToWindow(`Download progress... ${progressObj}`);
 })
 autoUpdater.on('update-downloaded', (ev, info) => {
-    sendStatusToWindow('Update downloaded; will install in 5 seconds');
+    sendStatusToWindow('Update downloaded; will install in 5 seconds: ' + info);
 })
 
 autoUpdater.on('update-downloaded', (ev, info) => {
