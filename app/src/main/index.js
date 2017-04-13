@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, dialog } from 'electron'
 const {autoUpdater} = require('electron-updater')
 
 let mainWindow
@@ -26,7 +26,9 @@ function createWindow () {
     mainWindow = null
   })
 
-  autoUpdater.checkForUpdates()
+    if (process.env.NODE_ENV !== 'development') {
+        autoUpdater.checkForUpdates()
+    }
 
   // eslint-disable-next-line no-console
   console.log('mainWindow opened')
@@ -36,7 +38,11 @@ autoUpdater.on('checking-for-update', () => {
     // sendStatusToWindow('Checking for update...');
 })
 autoUpdater.on('update-available', (ev, info) => {
-    sendStatusToWindow('Update available.');
+    dialog.showMessageBox({
+        type: 'info',
+        title: 'Update Found',
+        message: 'A new update is available. This will download now and install shortly.'
+    });
 })
 autoUpdater.on('update-not-available', (ev, info) => {
     // sendStatusToWindow('Update not available.');
