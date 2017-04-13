@@ -1,6 +1,6 @@
 {
   "name": "notes-client",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "A electron-vue project making use of Laravel 5.4 Notes API",
   "main": "./dist/main.js",
   "dependencies": {
